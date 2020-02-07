@@ -1,0 +1,3 @@
+rootProject.name = 'itemskins'
+
+include 'itemskins-common', 'itemskins-spigot', 'itemskins-sponge'

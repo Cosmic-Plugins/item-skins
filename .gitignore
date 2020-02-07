@@ -1,0 +1,7 @@
+.idea/**
+.gradle/**
+itemskins-common/**
+itemskins-spigot/build/**
+itemskins-spigot/out/**
+itemskins-sponge/build/**
+itemskins-sponge/out/**
