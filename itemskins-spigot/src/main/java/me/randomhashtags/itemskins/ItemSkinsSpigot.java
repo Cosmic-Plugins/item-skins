@@ -9,6 +9,7 @@ public final class ItemSkinsSpigot extends JavaPlugin {
     @Override
     public void onEnable() {
         getPlugin = this;
+        saveSettings();
         enable();
     }
 
@@ -17,8 +18,12 @@ public final class ItemSkinsSpigot extends JavaPlugin {
         disable();
     }
 
-    public void enable() {
+    private void saveSettings() {
         saveDefaultConfig();
+    }
+
+    public void enable() {
+        saveSettings();
         ItemSkinsAPI.INSTANCE.load();
     }
     public void disable() {
