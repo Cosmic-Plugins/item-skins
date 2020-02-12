@@ -34,7 +34,8 @@ public enum ItemSkinsAPI implements Listener, CommandExecutor, UVersionable, RPI
     private ItemMeta itemMeta;
     private List<String> lore;
 
-    public YamlConfiguration config;
+    public YamlConfiguration CONFIG;
+
     private UInventory gui;
     private ItemStack skin;
     private String appliedLore;
@@ -60,24 +61,33 @@ public enum ItemSkinsAPI implements Listener, CommandExecutor, UVersionable, RPI
         lore = new ArrayList<>();
 
         if(!otherdata.getBoolean("saved default item skins")) {
-            generateDefaultItemSkins();
+            final String[] defaultSkins = new String[] {
+                    "DEATH_KNIGHT_SKULL_BLADE",
+                    "FLAMING_HALO",
+                    "JOLLY_CANDY_SWORD",
+                    "KOALA",
+                    "MEAT_CLEAVER_AXE",
+                    "REINDEER_ANTLERS",
+                    "SANTA_HAT",
+            };
+            for(String s : defaultSkins) {
+                save("skins", s + ".yml");
+            }
             otherdata.set("saved default item skins", true);
             saveOtherData();
         }
 
-        final String folder = DATA_FOLDER + SEPARATOR + "item skins";
-        config = YamlConfiguration.loadConfiguration(new File(folder, "_settings.yml"));
-        gui = new UInventory(null, config.getInt("gui.size"), colorize(config.getString("gui.title")));
-        skin = d(config, "item");
-        appliedLore = colorize(config.getString("item.applied lore"));
+        gui = new UInventory(null, CONFIG.getInt("gui.size"), colorize(CONFIG.getString("gui.title")));
+        skin = d(CONFIG, "item");
+        appliedLore = colorize(CONFIG.getString("item.applied lore"));
         materials = new HashMap<>();
-        for(String s : getConfigurationSectionKeys(config, "materials", false)) {
-            materials.put(s, colorize(config.getString("materials." + s)));
+        for(String s : getConfigurationSectionKeys(CONFIG, "materials", false)) {
+            materials.put(s, colorize(CONFIG.getString("materials." + s)));
         }
 
         cache = new HashMap<>();
         final List<ItemStack> list = new ArrayList<>();
-        for(File f : new File(folder).listFiles()) {
+        for(File f : getFilesInFolder(DATA_FOLDER + SEPARATOR + "skins")) {
             if(!f.getAbsoluteFile().getName().equals("_settings.yml")) {
                 final ItemSkin skin = new FileItemSkin(f);
                 list.add(getItemSkinItem(skin, false));
@@ -87,6 +97,7 @@ public enum ItemSkinsAPI implements Listener, CommandExecutor, UVersionable, RPI
     }
     public void unload() {
         if(isEnabled) {
+            isEnabled = false;
             HandlerList.unregisterAll(this);
         }
     }

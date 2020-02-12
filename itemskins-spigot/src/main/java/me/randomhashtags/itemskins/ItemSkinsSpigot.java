@@ -1,15 +1,16 @@
 package me.randomhashtags.itemskins;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ItemSkinsSpigot extends JavaPlugin {
 
     public static ItemSkinsSpigot getPlugin;
+    public boolean placeholderapi;
 
     @Override
     public void onEnable() {
         getPlugin = this;
-        saveSettings();
         enable();
     }
 
@@ -18,15 +19,13 @@ public final class ItemSkinsSpigot extends JavaPlugin {
         disable();
     }
 
-    private void saveSettings() {
-        saveDefaultConfig();
-    }
-
     public void enable() {
-        saveSettings();
+        saveDefaultConfig();
+        placeholderapi = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
         ItemSkinsAPI.INSTANCE.load();
     }
     public void disable() {
+        placeholderapi = false;
         ItemSkinsAPI.INSTANCE.unload();
     }
 

@@ -2,8 +2,8 @@ package me.randomhashtags.itemskins.universal;
 
 import com.sun.istack.internal.NotNull;
 import me.randomhashtags.itemskins.ItemSkinsSpigot;
-import me.randomhashtags.itemskins.util.Versionable;
 import me.randomhashtags.itemskins.addon.util.Identifiable;
+import me.randomhashtags.itemskins.util.Versionable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -12,7 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -28,7 +27,6 @@ public interface UVersionable extends Versionable {
     String SEPARATOR = File.separator;
 
     ItemSkinsSpigot ITEM_SKINS = ItemSkinsSpigot.getPlugin;
-    FileConfiguration ITEM_SKINS_CONFIG = ITEM_SKINS.getConfig();
     PluginManager PLUGIN_MANAGER = Bukkit.getPluginManager();
     Server SERVER = Bukkit.getServer();
     Random RANDOM = new Random();
@@ -79,7 +77,7 @@ public interface UVersionable extends Versionable {
         final File f = new File(folder);
         return f.exists() ? f.listFiles() : new File[]{};
     }
-    default HashSet<String> getConfigurationSectionKeys(YamlConfiguration yml, String key, boolean includeKeys, String...excluding) {
+    default HashSet<String> getConfigurationSectionKeys(FileConfiguration yml, String key, boolean includeKeys, String...excluding) {
         final ConfigurationSection section = yml.getConfigurationSection(key);
         if(section != null) {
             final HashSet<String> set = new HashSet<>(section.getKeys(includeKeys));

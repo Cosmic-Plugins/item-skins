@@ -4,3 +4,5 @@ main: me.randomhashtags.itemskins.ItemSkinsSpigot
 api-version: 1.13
 authors: [RandomHashTags]
 description: Special item skins that change their texture to a custom one. Requires "Custom Items" (https://www.spigotmc.org/resources/6384) installed to work properly!
+softdepend:
+  - PlaceholderAPI
